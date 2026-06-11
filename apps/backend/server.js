@@ -15,7 +15,7 @@ const client = require('prom-client');
 const { Worker } = require('worker_threads');
 
 const PORT = process.env.PORT || 3001;
-const SERVICE = 'alessandro-backend';
+const SERVICE = 'backend';
 
 // ----------------------------------------------------------------------------
 // Logger estructurado en JSON (Alloy lo recoge desde stdout y lo manda a Loki)
