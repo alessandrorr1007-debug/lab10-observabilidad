@@ -1,0 +1,21 @@
+{
+  "name": "alessandro-backend",
+  "version": "1.0.0",
+  "description": "API instrumentada para observabilidad - Alessandro Rodriguez",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "observabilidad",
+    "docker",
+    "prometheus",
+    "grafana"
+  ],
+  "author": "Alessandro Rodriguez",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "prom-client": "^15.1.3"
+  }
+}
