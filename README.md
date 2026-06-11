@@ -13,7 +13,7 @@ docker compose up -d --build
 |----------------|-----------------------------|----------------------------------------|
 | Frontend       | http://localhost:8080       | Hello World + botones de tráfico/carga |
 | Backend (API)  | http://localhost:3001       | `/api/hello`, `/metrics`, `/load`      |
-| Grafana        | http://localhost:3000       | admin / admin                          |
+| Grafana        | http://localhost:3000       | alessandro / alessandro2002            |
 | Prometheus     | http://localhost:9090       | datasource ya provisionado             |
 | Loki           | http://localhost:3100       | datasource ya provisionado             |
 | Alloy (UI)     | http://localhost:12345      | estado del recolector de logs          |
