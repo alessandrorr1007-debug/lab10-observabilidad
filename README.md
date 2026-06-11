@@ -1,9 +1,38 @@
-# lab10-observabilidad
+# Monitoreo
+
+En este laboratorio exploraremos monitoreo con herramientas disponibles
 
 
-Preguntas
- 1. Prometheus guarda números: cuántas peticiones, cuánto CPU, cuánta memoria. Pero cuando algo falla, los números solos no te dicen qué pasó. Loki guarda el texto: "falló la conexión al inventario", "excepción no controlada en /api/checkout". Son dos tipos de información distintos y ambos son necesarios para entender qué ocurrió y por qué. 
-2. Si creas las fuentes de datos a mano, solo tú sabes cómo está configurado el sistema. Si mañana alguien más clona el proyecto, tendría que repetir todos esos clics desde cero y probablemente cometería algún error. Al tenerlo en archivos de configuración, Grafana las crea solo al arrancar, siempre igual, sin importar quién lo ejecute ni cuántas veces. 
-3. El panel del contenedor mide solo lo que consume tu aplicación. El del host mide todo lo que está corriendo en la máquina: Docker, el sistema operativo, otros contenedores. Pueden mostrar valores muy distintos porque el host tiene mucho más "ruido". Para alertar sobre una app específica siempre conviene usar el panel del contenedor, porque así sabes que el problema es tuyo y no de otra cosa corriendo en la misma máquina. 
-4. El evaluation interval es cada cuánto Grafana revisa si la alarma debería dispararse, en este caso cada 10 segundos. El pending period es cuánto tiempo tiene que mantenerse la condición antes de que realmente se dispare. Sin ese período de espera, cualquier pico de CPU de 2 segundos generaría una alarma, lo cual sería molesto e inútil. Con 30 segundos de pending period, sabes que el problema es real y no un spike pasajero.
+## Aplicaciones
+```bash
+docker compose up -d --build
+```
 
+## Servicios y URLs
+| Servicio       | URL                         | Notas                                  |
+|----------------|-----------------------------|----------------------------------------|
+| Frontend       | http://localhost:8080       | Hello World + botones de tráfico/carga |
+| Backend (API)  | http://localhost:3001       | `/api/hello`, `/metrics`, `/load`      |
+| Grafana        | http://localhost:3000       | admin / admin                          |
+| Prometheus     | http://localhost:9090       | datasource ya provisionado             |
+| Loki           | http://localhost:3100       | datasource ya provisionado             |
+| Alloy (UI)     | http://localhost:12345      | estado del recolector de logs          |
+| cAdvisor       | http://localhost:8081       | métricas por contenedor                |
+| node-exporter  | http://localhost:9100/metrics | métricas del host                    |
+
+## Configuraciones
+- **Datasources** Prometheus y Loki (provisionados automáticamente).
+- Logs etiquetados por Alloy con `tier=application` o `tier=infrastructure`.
+
+## Actividad
+- El **dashboard** (paneles de CPU + logs de app e infra).
+- La **alarma** de CPU > 50%.
+
+## Reset
+```bash
+docker compose down -v   # borra también dashboards/alarmas creados
+```
+
+> Nota de versiones: el tag `prom/prometheus:latest` apunta aún a la rama 2.x (LTS),
+> por eso fijamos `v3.8.1`. Promtail EOL (2026-03-02); el recolector de logs
+> es Grafana Alloy.
