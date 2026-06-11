@@ -3,7 +3,7 @@
 // "tier" (application | infrastructure) para separar logs de app e infraestructura.
 
 discovery.docker "containers" {
-  host = "unix:///var/run/docker.sock"
+  host = "tcp://host.docker.internal:2375"
 }
 
 discovery.relabel "containers" {
@@ -38,7 +38,7 @@ discovery.relabel "containers" {
 }
 
 loki.source.docker "containers" {
-  host       = "unix:///var/run/docker.sock"
+  host       = "tcp://host.docker.internal:2375"
   targets    = discovery.relabel.containers.output
   forward_to = [loki.write.default.receiver]
 }
